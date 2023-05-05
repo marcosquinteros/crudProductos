@@ -18,6 +18,7 @@
           <th>Codigo</th>
         </tr>
       </thead>
+      <tbody></tbody>
     </table>
 
     <h2>Formulario de carga y edicion de productos</h2>
@@ -29,7 +30,9 @@
       <label for="descripcion">Descripcion</label>
       <input type="text" id="descripcion" />
 
-      <button type="submit" id="addProductosButton">Agregar</button>
+      <button type="submit" data-mode="add" id="addProductosButton">
+        Agregar
+      </button>
     </form>
 
     <script src="./crud.js"></script>

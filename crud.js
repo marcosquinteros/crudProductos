@@ -37,6 +37,8 @@ addButton.addEventListener("click", (e) => {
     addButton.textContent = "Agregar";
 
     //Agrear funcion para actualizar la lista de productos
+    mostrarProductos();
+    localStorage.setItem("productos", JSON.stringify(productos));
   }
 });
 
@@ -55,14 +57,47 @@ listaProductos.addEventListener("click", (e) => {
       addButton.textContent = "Editar";
     }
   }
+  mostrarProductos();
 });
 
 //Funcion para eliminar los productos
-
+listaProductos.addEventListener("click", (e) => {
+  if (e.target.classList.contains("eliminar")) {
+    const id = e.target.dataset.id;
+    const index = productos.findIndex((producto) => producto.id === id);
+    if (index !== -1) {
+      productos.splice(index, 1);
+    }
+  }
+});
 //Funcion para generar id unico
+function uuidv4() {
+  return crypto.randomUUID();
+}
 
 //Funcion para guardar los productos en el localStorage
 
-//Funcion que obtiene los productos del localStorage
+function mostrarProductos() {
+  listaProductos.querySelector("tbody").innerHTML = "";
+
+  productos.forEach((producto) => {
+    const tr = document.createElement("tr");
+    tr.innerHTML = `
+    <td>${producto.name}</td>
+    <td>${producto.price}</td>
+    <td>${producto.desc}</td>
+    <td>
+    <button class="editar" data-id="${producto.id}">Editar</button>
+    <button class="eliminar" data-id="${producto.id}">Eliminar</button>;
+    </td>`;
+    listaProductos.querySelector("tbody").appendChild(tr);
+  });
+  //Funcion que obtiene los productos del localStorage
+  // localStorage.setItem("productos", JSON.stringify(productos));
+}
 
 //Funcion que muestra los productos del DOM
+const obtenerProductos = localStorage.getItem("productos");
+if (obtenerProductos) {
+  productos = JSON.parse(obtenerProductos);
+}
